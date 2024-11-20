@@ -1,0 +1,13 @@
+researcher_task:
+  description: >
+    Create a point by point summary of the topics discussed in the video with url {url}.
+  expected_output: >
+    A list with bullet points of the most relevant information in the video
+
+blog_writer_task:
+  description: >
+    Review the summary you got and expand each topic into a full section for a blog.
+    Make sure the report is detailed and contains any and all relevant information.
+  expected_output: >
+    A fully fledged blog post with the mains topics, each with a full section of information.
+    Formatted as markdown without '```'

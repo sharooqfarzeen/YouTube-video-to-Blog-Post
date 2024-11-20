@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "yt_to_blog"
+version = "0.1.0"
+description = "yt_to_blog using crewAI"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<=3.13"
+crewai = { extras = ["tools"], version = ">=0.70.1,<1.0.0" }
+
+
+[tool.poetry.scripts]
+yt_to_blog = "yt_to_blog.main:run"
+run_crew = "yt_to_blog.main:run"
+train = "yt_to_blog.main:train"
+replay = "yt_to_blog.main:replay"
+test = "yt_to_blog.main:test"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
