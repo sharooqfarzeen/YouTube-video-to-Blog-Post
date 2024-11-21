@@ -5,4 +5,3 @@ openai
 python-dotenv
 streamlit
 google-generativeai
-pysqlite3-binary
