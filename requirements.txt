@@ -6,3 +6,4 @@ python-dotenv
 streamlit
 google-generativeai
 pysqlite3-binary
+youtube-transcript-api
