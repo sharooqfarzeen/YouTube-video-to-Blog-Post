@@ -33,7 +33,8 @@ if "api_keys" not in st.session_state:
         st.session_state.api_keys["GOOGLE_API_KEY"] = os.environ["GOOGLE_API_KEY"]
 
 # Loading App Icon
-icon_svg = open("icon.svg").read()
+icon_file_path = os.path.join("src", "yt_to_blog", "icon.svg")
+icon_svg = open(icon_file_path).read()
 heading = "Video to Blogpost"
 # Setting header format
 header = f'''
