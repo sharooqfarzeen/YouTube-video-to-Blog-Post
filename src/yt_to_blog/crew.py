@@ -5,11 +5,6 @@ from crewai import LLM
 from tools.custom_tool import summarize
 
 import os
-from dotenv import load_dotenv
-load_dotenv()
-
-llm = LLM(model="gemini/gemini-1.5-flash", api_key=os.getenv("GOOGLE_API_KEY"))
-
 
 
 # Check our tools documentations for more information on how to use them
@@ -19,9 +14,10 @@ llm = LLM(model="gemini/gemini-1.5-flash", api_key=os.getenv("GOOGLE_API_KEY"))
 class YtToBlogCrew():
 	"""YtToBlog crew"""
 	
-	def __init__(self):
+	def __init__(self, api_key):
 		self.agents_config = "config/agents.yaml"
 		self.tasks_config = "config/tasks.yaml"
+		self.llm = LLM(model="gpt-4o-mini", api_key=api_key)
 
 	@agent
 	def researcher(self) -> Agent:
@@ -29,7 +25,7 @@ class YtToBlogCrew():
 			config=self.agents_config['researcher'],
 			tools=[summarize],
 			verbose=True,
-			llm = llm,
+			llm = self.llm,
 		)
 
 	@agent
@@ -37,7 +33,7 @@ class YtToBlogCrew():
 		return Agent(
 			config=self.agents_config['blog_writer'],
 			verbose=True,
-			llm = llm
+			llm = self.llm
 		)
 
 	@task

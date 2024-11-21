@@ -1,6 +1,7 @@
 # Streamlit app
 import io
 import os
+from dotenv import load_dotenv
 import time
 import streamlit as st
 from PIL import Image
@@ -9,11 +10,25 @@ from PIL import Image
 from crew import YtToBlogCrew
 from tools.custom_tool import VideoHandler # Handles URL validity check, video id extraction and transcription
 
+from get_api import get_api
+
 # Page title
 st.set_page_config(page_title="YouTube Video to Blogpost", page_icon="favicon.svg")
 
+# Loading API Keys
+load_dotenv()
+
+# Check if the API key is set
+if "api_keys" not in st.session_state:
+    st.session_state.api_keys = {}
+    if "OPENAI_API_KEY" not in os.environ or "GOOGLE_API_KEY" not in os.environ:
+        get_api()
+    else:
+        st.session_state.api_keys["OPENAI_API_KEY"] = os.environ["OPENAI_API_KEY"]
+        st.session_state.api_keys["GOOGLE_API_KEY"] = os.environ["GOOGLE_API_KEY"]
+
 # Loading App Icon
-icon_svg = open("icon.svg").read()
+icon_svg = open("src\yt_to_blog\icon.svg").read()
 heading = "Video to Blogpost"
 # Setting header format
 header = f'''
@@ -75,7 +90,7 @@ def run(url):
     inputs = {
         'url': url}
     
-    return YtToBlogCrew().crew().kickoff(inputs=inputs)
+    return YtToBlogCrew(st.session_state.api_keys["OPENAI_API_KEY"]).crew().kickoff(inputs=inputs)
 
 # Chat input
 text = st.chat_input(placeholder="Paste any YouTube video URL.")

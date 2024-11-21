@@ -14,6 +14,8 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
+import streamlit as st
+
 
 # Handles URL validity check, video id extraction and transcription
 class VideoHandler:
@@ -87,45 +89,42 @@ class VideoHandler:
 logging.basicConfig(filename='error.log', level=logging.ERROR, 
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Loading environment variables
-load_dotenv()
 
-# Setting API key
-api_key = os.getenv("GOOGLE_API_KEY")
-genai.configure(api_key=api_key)
-
-# Initializing model
-model = genai.GenerativeModel(model_name="gemini-1.5-flash",
-                             system_instruction=
-                             """
-                             You are a YouTube video transcript summarizer.
-                             
-                            Most of your inputs will have 3 parameters:
-                                1. The YouTube video title
-                                2. The video thumbnail, which is an image
-                                3. The video transcript
-                                
-                                The YouTube video transcripts will be in the following format:
-                                [{'text': "",
-                                'start': ,
-                                'duration':},
-                                .
-                                .
-                                .
-                                ]
-                                
-                                Your job is to go through the video title, thumbnail and transcript to form a point by point 
-                                summary of the video.
-                                The length of the summary should be directly proportional to video length.
-                                The sentiment and style of summary should reflect the topic of the video and should sound like a human.
-                            
-                            Some inputs may not have all 3 parameters. User the parameters in hand to create the point by point summary.
-                             """)
-
-chat = model.start_chat()
-
-def get_response(prompt):
+def get_response(prompt, api_key):
     try:
+        genai.configure(api_key=api_key)
+
+        # Initializing model
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash",
+                                    system_instruction=
+                                    """
+                                    You are a YouTube video transcript summarizer.
+                                    
+                                    Most of your inputs will have 3 parameters:
+                                        1. The YouTube video title
+                                        2. The video thumbnail, which is an image
+                                        3. The video transcript
+                                        
+                                        The YouTube video transcripts will be in the following format:
+                                        [{'text': "",
+                                        'start': ,
+                                        'duration':},
+                                        .
+                                        .
+                                        .
+                                        ]
+                                        
+                                        Your job is to go through the video title, thumbnail and transcript to form a point by point 
+                                        summary of the video.
+                                        The length of the summary should be directly proportional to video length.
+                                        The sentiment and style of summary should reflect the topic of the video and should sound like a human.
+                                    
+                                    Some inputs may not have all 3 parameters. User the parameters in hand to create the point by point summary.
+                                    """)
+
+        chat = model.start_chat()
+
+
         # Fetching response
         response = chat.send_message(
             prompt, 
@@ -192,6 +191,7 @@ def summarize(url: str):
             else:
                 prompt.append(video.transcript)
                 # Streaming summary from model and writing it to UI
-                response = get_response(prompt)
+                with st.spinner("Analyzing video..."):
+                    response = get_response(prompt, st.session_state.api_keys["GOOGLE_API_KEY"])
 
     return response
