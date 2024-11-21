@@ -1,14 +1,3 @@
-import chromadb
-from chromadb.config import Settings
-
-client = chromadb.Client(
-    Settings(
-        persist_directory=".chromadb",  # Directory for persisting data
-        chroma_db_impl="duckdb",       # Use DuckDB instead of SQLite
-    )
-)
-
-
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import YoutubeVideoSearchTool
