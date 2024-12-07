@@ -21,7 +21,7 @@ from get_api import get_api
 st.set_page_config(page_title="YouTube Video to Blogpost", page_icon="favicon.svg")
 
 # Loading API Keys
-load_dotenv()
+load_dotenv(override=True)
 
 # Check if the API key is set
 if "api_keys" not in st.session_state:
@@ -35,7 +35,7 @@ if "api_keys" not in st.session_state:
 if ("GOOGLE_API_KEY" in st.session_state.api_keys) and ("OPENAI_API_KEY" in st.session_state.api_keys):
 
     # Loading App Icon
-    icon_file_path = os.path.join("src", "yt_to_blog", "icon.svg")
+    icon_file_path = os.path.join(os.getcwd(), "icon.svg")
     icon_svg = open(icon_file_path).read()
     heading = "Video to Blogpost"
     # Setting header format
