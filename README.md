@@ -1,4 +1,4 @@
-## [Try the app on streamlit](https://youtube-video-to-blog-post.streamlit.app/)
+## [Try the app on Streamlit](https://youtube-video-to-blog-post.streamlit.app/)
 
 **OR**
 
