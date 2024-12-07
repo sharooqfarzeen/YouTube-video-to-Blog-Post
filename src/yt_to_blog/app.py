@@ -1,7 +1,7 @@
-# these three lines swap the stdlib sqlite3 lib with the pysqlite3 package
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# # these three lines swap the stdlib sqlite3 lib with the pysqlite3 package
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 # Streamlit app
 import io
@@ -33,11 +33,10 @@ if "api_keys" not in st.session_state:
         st.session_state.api_keys["GOOGLE_API_KEY"] = os.environ["GOOGLE_API_KEY"]
 
 if ("GOOGLE_API_KEY" in st.session_state.api_keys) and ("OPENAI_API_KEY" in st.session_state.api_keys):
-    # Debug
-    print(os.getcwd())
+    
     # Loading App Icon
-    # icon_file_path = os.path.join(os.getcwd(), "icon.svg")
-    icon_svg = open("icon.svg").read()
+    icon_file_path = os.path.join(os.getcwd(), "icon.svg")
+    icon_svg = open(icon_file_path).read()
     heading = "Video to Blogpost"
     # Setting header format
     header = f'''
