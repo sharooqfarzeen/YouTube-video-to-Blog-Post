@@ -35,8 +35,8 @@ if "api_keys" not in st.session_state:
 if ("GOOGLE_API_KEY" in st.session_state.api_keys) and ("OPENAI_API_KEY" in st.session_state.api_keys):
 
     # Loading App Icon
-    icon_file_path = os.path.join(os.getcwd(), "icon.svg")
-    icon_svg = open(icon_file_path).read()
+    # icon_file_path = os.path.join(os.getcwd(), "icon.svg")
+    icon_svg = open("icon.svg").read()
     heading = "Video to Blogpost"
     # Setting header format
     header = f'''
