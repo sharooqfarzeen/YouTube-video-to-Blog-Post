@@ -33,7 +33,8 @@ if "api_keys" not in st.session_state:
         st.session_state.api_keys["GOOGLE_API_KEY"] = os.environ["GOOGLE_API_KEY"]
 
 if ("GOOGLE_API_KEY" in st.session_state.api_keys) and ("OPENAI_API_KEY" in st.session_state.api_keys):
-
+    # Debug
+    print(os.getcwd())
     # Loading App Icon
     # icon_file_path = os.path.join(os.getcwd(), "icon.svg")
     icon_svg = open("icon.svg").read()
